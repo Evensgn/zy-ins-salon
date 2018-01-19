@@ -3,7 +3,7 @@ import requests
 import time
 import os
 
-local_time = time.asctime(time.localtime(time.time()))
+update_time = time.time()
 failed = False
 
 if not os.path.exists(save_path):
@@ -19,4 +19,4 @@ for record in salon_records:
 
 if not failed:
 	with open('./saves/update_time.text', 'w', encoding = 'utf8') as f: 
-		f.write(local_time)
+		f.write(update_time)
