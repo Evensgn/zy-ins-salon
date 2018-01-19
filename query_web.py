@@ -1,5 +1,6 @@
 from defines import *
 import re
+import os
 
 class Report(object):
 	pass
@@ -23,7 +24,7 @@ def query_stuid(stuid):
 		page_.title = record[0]	
 		page_.count = 0
 		page_.blocks = []
-		with open('.//' + save_path + '//' + record[0] + '.text', 'r', encoding = 'utf8') as f:
+		with open(os.path.join(save_path, record[1] + '.text'), 'r', encoding='utf8') as f:
 			page_text = f.read()
 			blocks = re.findall(block_pattern, page_text)
 			for block in blocks:
