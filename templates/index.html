@@ -39,27 +39,35 @@
                 <ul class="nav masthead-nav">
                   <li><a href="http://evensgn.com">返回主站</a></li>
                   <li><a href="http://zhiyuan.sjtu.edu.cn">致远学院</a></li>
-                  <li><a href="https://github.com/Evensgn/zy-ins-salon">GitHub</a></li>
+                  <li><a href="https://github.com/Evensgn/zy-ins-salon">GitHub 页面</a></li>
                 </ul>
               </nav>
             </div>
           </div>
 
-          <div class="inner cover">
-          	<form action="/query" method="post" class="form-inline">
-						  <div class="form-group">
-						    <div class="input-group">
-						      <div class="input-group-addon">学号</div>
-						      <input class="form-control" name="stuid" placeholder="请输入查询的学号">
-						    </div>
-						  </div>
-						  <button type="submit" class="btn btn-primary">查询</button>
-						</form>
+        	<form action="/query" method="post" class="form-inline">
+					  <div class="form-group">
+					    <div class="input-group">
+					      <div class="input-group-addon">学号</div>
+					      <input class="form-control" name="stuid" placeholder="请输入查询的学号">
+					    </div>
+					  </div>
+					  <button type="submit" class="btn btn-primary">查询</button>
+					</form>
+					<br/>
+					<div class="alert alert-info" role="alert" align="left">
+						相关说明：<br/>
+						<ul>
+						  <li>本站点提供的是第三方查询平台，查询结果仅供参考，使用的全部 ZY-INS 沙龙参与记录均来自致远学院官网网站的公开信息。</li>
+						  <li>本站点使用的数据会定期更新，请注意，在两次更新之间的数据可能不是最新版本。当前使用的数据获取时间：{{ update_time }}。</li>
+						  <li>若本站点查询结果与致远学院官网数据存在偏差，请以学院官网信息为准，由于使用本站点查询结果导致的任何问题，本站点不承担责任。</li>
+						  <li>如果您发现本站点功能存在问题，欢迎通过页面底部链接反馈 ;-)</li>
+						</ul>
 					</div>
 
           <div class="mastfoot">
             <div class="inner">
-              <p>Copyright © 2018 <a href="http://evensgn.com">Zhou Fan</a></p>
+              <p><a href="mailto:i@evensgn.com">反馈 Bug</a> | Copyright © 2018 <a href="http://evensgn.com">Zhou Fan</a></p>
             </div>
           </div>
 
