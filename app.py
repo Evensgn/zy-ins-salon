@@ -6,7 +6,6 @@ from defines import *
 import time
 import query_web
 import update_records
-import os
 
 app = Flask(__name__)
 
