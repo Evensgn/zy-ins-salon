@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="Zhou Fan's Home Page">
+    <meta name="description" content="ZY-INS 沙龙参与次数查询">
     <meta name="author" content="Evensgn">
     <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
@@ -34,7 +34,7 @@
 
           <div class="masthead clearfix">
             <div class="inner">
-              <h3 class="masthead-brand">ZY-INS 沙龙参加次数查询</h3>
+              <h3 class="masthead-brand">ZY-INS 沙龙参与次数查询</h3>
               <nav>
                 <ul class="nav masthead-nav">
                   <li><a href="http://evensgn.com">返回主站</a></li>
@@ -46,7 +46,14 @@
           </div>
 
           <div class="alert alert-info" role="alert" align="left">
-            {{ report }}
+            {% for page in pages %}
+              {{ page.title }} <br/>
+              <ul>
+                {% for block in page.blocks %}
+                  <li>{{ block }} {% if block.multiple %} {% endif %}</li>
+                {% endfor %}
+              </ul>
+            {% endfor %}
           </div>
           <br/>
           <div class="alert alert-info" role="alert" align="left">

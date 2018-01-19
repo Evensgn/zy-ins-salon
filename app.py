@@ -20,10 +20,10 @@ def home():
 def signin():
     stuid = request.form['stuid']
     if not stuid.isdigit():
-        query_str = 'Oops, student id is invalid.' 
+        pass
     else:
-        query_str = query_web.query_stuid(stuid)
-    return render_template('query.html', report = query_str)
+        report = query_web.query_stuid(stuid)
+    return render_template('query.html', report = report)
 
 if __name__ == '__main__':
     update_records.update()
