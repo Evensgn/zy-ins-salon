@@ -14,6 +14,8 @@ def app_init():
     update_records.update_text()
     app.stus = update_records.get_map()
 
+app_init()
+
 def check_update_time():
     update_time = 0.0
     with open(os.path.join(save_path, 'update_time.text'), 'r', encoding='utf8') as f:
@@ -61,5 +63,4 @@ def query():
         return render_template('query.html', report=report)
 
 if __name__ == '__main__':
-    app_init()
     app.run()
