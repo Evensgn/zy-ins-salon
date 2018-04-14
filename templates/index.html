@@ -1,94 +1,44 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-  <head>
-    <style>
-    cn {
-      font-family: "微软雅黑";
-    }
-    </style>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="ZY-INS 沙龙参与次数查询">
-    <meta name="author" content="Evensgn">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+{% extends "layout.html" %}
 
-    <title>ZY-INS 沙龙参与次数查询</title>
+{% block nav %}
+  <ul class="nav masthead-nav">
+    <li class="active"><a href="/">首页</a></li>
+    <li><a href="http://evensgn.com">返回主站</a></li>
+    <li><a href="http://zhiyuan.sjtu.edu.cn/articles/2396">学院官网</a></li>
+    <li><a href="https://github.com/Evensgn/zy-ins-salon">GitHub 页面</a></li>
+  </ul>
+{% endblock %}
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-    <!-- Custom styles for this template -->
-    <link href="{{ url_for('static', filename='cover.css') }}" rel="stylesheet">
-
-  </head>
-
-  <body background="{{ url_for('static', filename='bg.jpg') }}">
-
-    <div class="site-wrapper">
-
-      <div class="site-wrapper-inner">
-
-        <div class="cover-container">
-
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand">ZY-INS 沙龙参与次数查询</h3>
-              <nav>
-                <ul class="nav masthead-nav">
-                	<li class="active"><a href="/">首页</a></li>
-                  <li><a href="http://evensgn.com">返回主站</a></li>
-                  <li><a href="http://zhiyuan.sjtu.edu.cn/articles/2396">学院官网</a></li>
-                  <li><a href="https://github.com/Evensgn/zy-ins-salon">GitHub 页面</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-
-        	<form action="/query" method="post" class="form-inline">
-					  <div class="form-group">
-					    <div class="input-group">
-					      <div class="input-group-addon">学号</div>
-					      <input class="form-control" name="stuid" placeholder="请输入查询的学号">
-					    </div>
-					  </div>
-					  <button type="submit" class="btn btn-primary">查询</button>
-					</form>
-					<br/>
-					{% if error_query %}
-						<div class="alert alert-danger alert-dismissible" role="alert">
-					  	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-					  	没有查询到此学号的相关记录，请重新输入哦。
-						</div>
-					{% endif %}
-					<div class="alert alert-info" role="alert" align="left">
-						相关说明：<br/>
-						<ul>
-						  <li>本站点提供的是第三方查询平台，查询结果仅供参考，使用的全部 ZY-INS 沙龙参与记录均来自 <a class="alert-link" href="http://zhiyuan.sjtu.edu.cn/articles/2396">致远学院官方网站</a> 的公开信息。 </li>
-						  <li>本站点使用的数据会定期更新，请注意，在两次更新之间的数据可能不是最新版本。当前使用的数据获取时间：{{ update_time }}。</li>
-						  <li>若本站点查询结果与致远学院官网数据存在偏差，请以学院官网信息为准，由于使用本站点查询结果导致的任何问题，本站点不承担责任。</li>
-						  <li>查询支持对学号进行部分匹配，但请注意若输入的学号不完整，查询结果可能包含其他人的参与记录（假定不存在一个学号是其他学号的子串），您可以查看查询结果中的详细信息是否都是您参与的活动。</li>
-						  <li>如果您发现本站点功能存在问题，欢迎通过页面底部链接反馈 ;-)</li>
-						</ul>
-					</div>
-
-          <div class="mastfoot">
-            <div class="inner">
-              <p><a href="mailto:i@evensgn.com">反馈 Bug</a> | Copyright © 2018 <a href="http://evensgn.com">Zhou Fan</a></p>
-            </div>
-          </div>
-
-        </div>
-
+{% block body %}
+  <form action="/query" method="post" class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon">学号</div>
+        <input class="form-control" name="stuid" placeholder="请输入查询的学号">
       </div>
-
     </div>
+    <button type="submit" class="btn btn-primary">查询</button>
+  </form>
+  <br/>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  </body>
-</html>
+  {% if error_query %}
+  	<div class="alert alert-danger alert-dismissible" role="alert">
+    	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    	没有查询到此学号的相关记录，请重新输入哦。
+  	</div>
+  {% endif %}
+  
+  <div class="alert alert-info" role="alert" align="left">
+    <p><b>News</b></p>
+    <ul>
+      <li>[2018-04-14] 本站点进行了更新，理论上致远理科的同学现在可以查询到完整的沙龙参与记录啦。</li>
+    </ul>
+    <p><b>相关说明</b></p>
+    <ul>
+  	  <li>本站点提供致远学术报告（包含 ZY-INS 沙龙和相关院系讲座）参与次数的查询服务，所使用的全部数据均来自 <a class="alert-link" href="http://zhiyuan.sjtu.edu.cn/articles/2396">致远学院官方网站</a> 的公开信息。 </li>
+  	  <li>本站点使用的数据会定期更新（目前每小时更新一次），请注意，在两次更新之间的数据可能不是最新版本。当前使用的数据获取时间：{{ update_time }}。</li>
+  	  <li>如果您发现本站点功能存在任何问题（例如查询结果和学院官网信息不一致），可以通过页面底部链接反馈。</li>
+      <li>本站点是 <a class="alert-link" href="http://evensgn.com">范舟</a> 在寒假开发的，此后又进行了若干后续更新，代码公开在 GitHub 上，欢迎到 <a class="alert-link" href="https://github.com/Evensgn/zy-ins-salon">项目仓库</a> 点个 Star ;-)</li>
+  	</ul>
+  </div>
+{% endblock %}

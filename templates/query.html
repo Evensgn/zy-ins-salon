@@ -1,83 +1,58 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-  <head>
-    <style>
-    cn {
-      font-family: "微软雅黑";
-    }
-    </style>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="ZY-INS 沙龙参与次数查询">
-    <meta name="author" content="Evensgn">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+{% extends "layout.html" %}
 
-    <title>ZY-INS 沙龙参与次数查询</title>
+{% block nav %}
+  <ul class="nav masthead-nav">
+    <li><a href="/">首页</a></li>
+    <li><a href="http://evensgn.com">返回主站</a></li>
+    <li><a href="http://zhiyuan.sjtu.edu.cn/articles/2396">学院官网</a></li>
+    <li><a href="https://github.com/Evensgn/zy-ins-salon">GitHub 页面</a></li>
+  </ul>
+{% endblock %}
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+{% block body %}
+  <div class="alert alert-info" role="alert" align="left">
+    <p><strong>{{ report.stuid }}</strong> 同学参与 ZY-INS 沙龙 <strong>{{ report.count_zy}}</strong> 次，参与相关院系讲座 <strong>{{ report.count_other}}</strong> 次，共计 <strong>{{ report.count_all }}</strong> 次。</p>
+  </div>
 
-    <!-- Custom styles for this template -->
-    <link href="{{ url_for('static', filename='cover.css') }}" rel="stylesheet">
-
-  </head>
-
-  <body background="{{ url_for('static', filename='bg.jpg') }}">
-
-    <div class="site-wrapper">
-
-      <div class="site-wrapper-inner">
-
-        <div class="cover-container">
-
-          <div class="masthead clearfix">
-            <div class="inner">
-              <h3 class="masthead-brand">ZY-INS 沙龙参与次数查询</h3>
-              <nav>
-                <ul class="nav masthead-nav">
-                  <li><a href="/">首页</a></li>
-                  <li><a href="http://evensgn.com">返回主站</a></li>
-                  <li><a href="http://zhiyuan.sjtu.edu.cn/articles/2396">学院官网</a></li>
-                  <li><a href="https://github.com/Evensgn/zy-ins-salon">GitHub</a></li>
-                </ul>
-              </nav>
-            </div>
-          </div>
-
-          <div class="alert alert-info" role="alert" align="left">
-            <p><strong>{{ report.stuid }}</strong> 同学参与 ZY-INS 沙龙（包括相关院系学术讲座）共计 <strong>{{ report.count}}</strong> 次。</p>
-            {% for page in report.pages %}
-              {{ page.title }} <br/>
-              <ul>
-                {% for block in page.blocks %}
-                  <li>{{ block.title }} {% if block.multiple %} <strong>(x{{ block.count }})</strong> {% endif %}</li>
-                {% endfor %}
-              </ul>
-            {% endfor %}
-          </div>
-
-          <div class="alert alert-warning" role="alert" align="left">
-            从2013级开始，致远学院、致远理科荣誉计划学生本科修业期间须修读1学分个性化必修课程《致远学术报告》。学生参加至少16次ZY-INS沙龙或讲座（其中至少12次ZY-INS沙龙），方可获得《致远学术报告》成绩，成绩将于第八学期以“P”计入成绩大表。（来源：<a class="alert-link" href="http://zhiyuan.sjtu.edu.cn/articles/2396">致远学院官方网站</a>）
-          </div>
-
-          <div class="mastfoot">
-            <div class="inner">
-              <p><a href="mailto:i@evensgn.com">反馈 Bug</a> | Copyright © 2018 <a href="http://evensgn.com">Zhou Fan</a></p>
-            </div>
-          </div>
-
-        </div>
-
+  <div id="summary">
+    {% if not report.all_ok %}
+      <div class="alert alert-danger" role="alert" align="left">
+        <p>您尚未满足课程要求的参与次数：参与 ZY-INS 沙龙或讲座总数不足 16 次 :-(</p>
       </div>
+    {% elif not report.zy_ok %}
+      <div class="alert alert-danger" role="alert" align="left">
+        <p>您尚未满足课程要求的参与次数：参与 ZY-INS 沙龙次数不足 12 次 :-(</p>
+      </div>
+    {% else %}
+      <div class="alert alert-success" role="alert" align="left">
+        <p>您已经满足课程要求的参与次数 ;-)</p>
+      </div>
+    {% endif %}
+  </div>
 
-    </div>
+  <div class="alert alert-info" role="alert" align="left" style="max-height: 200px; overflow-x: auto">
+    <p>ZY-INS 沙龙参与记录</p>
+    <ul>
+      {% for act_title in report.acts_zy %}
+        <li>{{ act_title[0] }}</li>
+      {% endfor %}
+      {% if not report.has_acts_zy %}
+        <li>无</li>
+      {% endif %}
+    </ul>
+    <br/>
+    <p>相关院系讲座参与记录</p>
+    <ul>
+      {% for act_title in report.acts_other %}
+        <li>{{ act_title[0] }} <b>(x{{ act_title[1] }})</b></li>
+      {% endfor %}
+      {% if not report.has_acts_other %}
+        <li>无</li>
+      {% endif %}
+    </ul>
+  </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  </body>
-</html>
+  <div class="alert alert-warning" role="alert" align="left">
+    从 2013 级开始，致远学院、致远理科荣誉计划学生本科修业期间须修读 1 学分个性化必修课程《致远学术报告》。学生参加至少 <b>16</b> 次 ZY-INS 沙龙或讲座（其中至少 <b>12</b> 次ZY-INS沙龙），方可获得《致远学术报告》成绩，成绩将于第八学期以“P”计入成绩大表。（来源：<a class="alert-link" href="http://zhiyuan.sjtu.edu.cn/articles/2396">致远学院官方网站</a>）
+  </div>
+{% endblock %}
